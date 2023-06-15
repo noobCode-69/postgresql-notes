@@ -118,3 +118,27 @@ CREATE TABLE photoes (
   user_id INTEGER REFERENCES users(id) ON DELETE CASCADE
 );
 ```
+
+1. **JOINS**
+
+```sql
+SELECT contents , username 
+FROM comments
+JOIN users on users.id = comments.user_id
+```
+
+1. **************Some gotchas on JOINS**************
+    1. **********************If names of the columns collide we must provide a context**********************
+    2. **************************There are multiple types of JOIN**************************
+    3. **************************The order between FROM and JOIN sometimes makes a difference (When we don’t find a match it’s excluded)**************************
+2. ********Different kind of JOINS********
+    1. ************************************************************************************INNER JOIN (Include only when found in both table)************************************************************************************
+    2. ******LEFT  JOIN (Include only when found in both table or in the left table)******
+    3. ******RIGHT  JOIN (Include only when found in both table or in the right table)******
+    4. ********FULL JOIN (Include when found in either of the table)********
+
+```sql
+SELECT url , username
+FROM photos
+LEFT JOIN users on users.id = photos.user_id
+```
