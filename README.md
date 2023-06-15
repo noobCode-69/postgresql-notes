@@ -142,3 +142,88 @@ SELECT url , username
 FROM photos
 LEFT JOIN users on users.id = photos.user_id
 ```
+
+1. ****************************************Aggregation of Records : Grouping and Aggregation****************************************
+2. ****************GROUP BY****************
+    1. **************************************************************************It first find all the unique values of the GROUP BY column**************************************************************************
+    2. ************************************After finding unique values, it fill all the rows in each group of unique values************************************
+    3. ************************************************We can only select the grouped columns************************************************
+    
+    ```sql
+    SELECT user_id
+    FROM photos
+    GROUP BY user_id
+    ```
+    
+3. ******************************************************************GROUP BY alone is not so useful, therefore we use AGGREGATE functions to make is more useful******************************************************************
+4. **************************************AGGREGATE Functions**************************************
+    1. ******The columns that we can’t select in GROUP BY , we can apply an AGGREGATE functions to them and get useful data from them******
+    2. ******************************Some of the aggregate functions are : MIN() , MAX() , COUNT() , AVG() , SUM()****************************** 
+5. **********************************************************Combining GROUP BY and AGGREGATES**********************************************************
+
+```sql
+SELECT user_id , COUNT(id)
+FROM photos
+GROUP BY user_id
+```
+
+1. **************************The correct order : FROM → JOIN → WHERE → GROUP BY → HAVING**************************
+2. **************HAVING************** 
+    1. ********************************************************************************You will always use HAVING with GROUP BY********************************************************************************
+    2. ******HAVING is used for filtering in groups******
+    
+    ```sql
+    SELECT photo_id , COUNT(*)
+    FROM COMMENTS 
+    WHERE photo_id < 3
+    GROUP BY photo_id
+    HAVING COUNT(*) > 2;
+    ```
+    
+3. ******SORTING******
+    
+    ```sql
+    SELECT * 
+    FROM products
+    ORDER BY price DESC , weight ASC;
+    ```
+    
+4. ************OFFSET************
+    1. **************************************************************************OFFSET is used to skip first “n” number of values************************************************************************** 
+    
+    ```sql
+    SELECT * 
+    FROM products
+    OFFSET 40;
+    ```
+    
+5. **********LIMIT**********
+    1. ****************************************LIMIT is used to get first “n” number of values****************************************
+    
+    ```sql
+    SELECT * 
+    FROM products
+    ORDER BY price
+    LIMIT 3
+    ```
+    
+6. ************UNIONS************
+    1. ****It is used to merge the result of two or more different queries into one****
+    2. ************************The common item will be included only once , but if you want to include to separately use UNION ALL instead of UNION************************
+    3. ************************While doing unions the names of columns and the type of each named columns must be same************************ 
+    
+    ```sql
+    (	
+      SELECT * 
+    	FROM products
+    	ORDER BY price
+    	LIMIT 4
+    )
+    JOIN
+    (
+      SELECT * 
+    	FROM products
+    	ORDER BY price / weight 
+    	LIMIT 4
+    );
+    ```
