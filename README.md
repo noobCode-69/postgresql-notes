@@ -90,7 +90,7 @@ CREATE TABLE users (
 1. **Foreign Key**
 
 ```sql
-CREATE TABLE photoes (
+CREATE TABLE photos (
 	id SERIAL PRIMARY KEY,
   url VARCHAR(200),
   user_id INTEGER REFERENCES users(id)
@@ -226,4 +226,38 @@ GROUP BY user_id
     	ORDER BY price / weight 
     	LIMIT 4
     );
+    ```
+    
+7. ********************SUB-QUERIES********************
+    
+    ```sql
+    SELECT name , price 
+    FROM products
+    WHERE price > (
+    	SELECT MAX(price)
+      FROM products
+      WHERE department = 'Toys'
+    );
+    ```
+    
+8. **********To learn more about sub-queries go to the sub-queries folder**********
+9. ************************************Find unique values************************************
+    
+    ```sql
+    SELECT DISTINCT departments 
+    FROM products
+    ```
+    
+10. **********************CASE in SQL**********************
+    
+    ```sql
+    SELECT 
+    	name, 
+      price,
+      CASE
+      	WHEN price > 500 THEN 'costly'
+        WHEN price > 300 THEN 'very costly'
+        ELSE 'cheap'
+      END
+    FROM products
     ```
